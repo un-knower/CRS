@@ -1,0 +1,50 @@
+----------------------------------------------------------------
+Fri Jun 08 11:16:57 CST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-0163-dd65-a76b-00000a892ca8 
+on database directory D:\ljy\dns\metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@3e2973d9 
+Loaded from file:/D:/mav/mvnRepository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_79-b15
+user.dir=D:\ljy\dns
+os.name=Windows 7
+os.arch=amd64
+os.version=6.1
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+Fri Jun 08 11:16:59 CST 2018 Thread[main,5,main] Wrote class org.apache.derby.exe.acaaeec04ex0163xdd65xa76bx00000a892ca80 to file acaaeec04ex0163xdd65xa76bx00000a892ca80.class. Please provide support with the file and the following exception information: java.lang.OutOfMemoryError: PermGen space
+Fri Jun 08 11:16:59 CST 2018 Thread[main,5,main] (XID = 361), (SESSIONID = 5), (DATABASE = metastore_db), (DRDAID = null), Cleanup action starting
+Fri Jun 08 11:16:59 CST 2018 Thread[main,5,main] (XID = 361), (SESSIONID = 5), (DATABASE = metastore_db), (DRDAID = null), Failed Statement is: SELECT CAST (RTRIM(CAST (T1 AS CHAR(128))) AS VARCHAR(128)) AS TYPE_NAME, T2 AS DATA_TYPE, T3 AS PRECISION, CAST (RTRIM(CAST(T4 AS CHAR(10))) AS VARCHAR(10)) AS LITERAL_PREFIX, CAST (RTRIM(T5) AS VARCHAR(10)) AS LITERAL_SUFFIX, CAST (RTRIM(CAST(T6 AS CHAR(20))) AS VARCHAR(20)) AS CREATE_PARAMS, CAST (T7 AS SMALLINT) AS NULLABLE, T8 AS CASE_SENSITIVE, CAST (T9 AS SMALLINT) AS SEARCHABLE, T10 AS UNSIGNED_ATTRIBUTE, T11 AS FIXED_PREC_SCALE, T12 AS AUTO_INCREMENT, CAST (RTRIM(CAST(T1 AS CHAR(128))) AS VARCHAR(128)) AS LOCAL_TYPE_NAME, CAST (T14 AS SMALLINT) AS MINIMUM_SCALE, CAST (T15 AS SMALLINT) AS MAXIMUM_SCALE, CAST (NULL AS INT) AS SQL_DATA_TYPE, CAST (NULL AS INT) AS SQL_DATETIME_SUB, T18 AS NUM_PREC_RADIX FROM ( VALUES ('BIGINT',-5,19,CAST (NULL AS CHAR),CAST (NULL AS CHAR),CAST (NULL AS CHAR), 1,FALSE,2,FALSE,FALSE,TRUE,0,0,10),('LONG VARCHAR FOR BIT DATA',-4,32700,'X''','''',CAST (NULL AS CHAR), 1,FALSE,0,TRUE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER), CAST (NULL AS INTEGER)), ('VARCHAR () FOR BIT DATA',-3,32672,'X''','''','length', 1,FALSE,2,TRUE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER), CAST (NULL AS INTEGER)), ('CHAR () FOR BIT DATA',-2,254,'X''','''','length', 1,FALSE,2,TRUE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER), CAST (NULL AS INTEGER)), ('LONG VARCHAR',-1,32700,'''','''',CAST (NULL AS CHAR), 1,TRUE,1,TRUE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER), CAST (NULL AS INTEGER)), ('CHAR',1,254,'''','''','length', 1,TRUE,3,TRUE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER), CAST (NULL AS INTEGER)), ('NUMERIC',2,31,CAST (NULL AS CHAR),CAST (NULL AS CHAR),'precision,scale', 1,FALSE,2,FALSE,TRUE,FALSE,0,31,10),('DECIMAL',3,31,CAST (NULL AS CHAR),CAST (NULL AS CHAR),'precision,scale', 1,FALSE,2,FALSE,TRUE,FALSE,0,31,10),('INTEGER',4,10,CAST (NULL AS CHAR),CAST (NULL AS CHAR),CAST (NULL AS CHAR), 1,FALSE,2,FALSE,FALSE,TRUE,0,0,10),('SMALLINT',5,5,CAST (NULL AS CHAR),CAST (NULL AS CHAR),CAST (NULL AS CHAR), 1,FALSE,2,FALSE,FALSE,TRUE,0,0,10),('FLOAT',6,52,CAST (NULL AS CHAR),CAST (NULL AS CHAR),'precision', 1,FALSE,2,FALSE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER),2),('REAL',7,23,CAST (NULL AS CHAR),CAST (NULL AS CHAR),CAST (NULL AS CHAR), 1,FALSE,2,FALSE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER),2),('DOUBLE',8,52,CAST (NULL AS CHAR),CAST (NULL AS CHAR),CAST (NULL AS CHAR), 1,FALSE,2,FALSE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER),2),('VARCHAR',12,32672,'''','''','length', 1,TRUE,3,TRUE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER), CAST (NULL AS INTEGER)), ('BOOLEAN',16,1,CAST (NULL AS CHAR),CAST (NULL AS CHAR),CAST (NULL AS CHAR), 1,FALSE,2,TRUE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER),CAST (NULL AS INTEGER)),('DATE',91,10,'DATE''','''',CAST (NULL AS CHAR), 1,FALSE,2,TRUE,FALSE,FALSE,0,0,10),('TIME',92,8,'TIME''','''',CAST (NULL AS CHAR), 1,FALSE,2,TRUE,FALSE,FALSE,0,0,10),('TIMESTAMP',93,29,'TIMESTAMP''','''',CAST (NULL AS CHAR), 1,FALSE,2,TRUE,FALSE,FALSE,0,9,10),('OBJECT',2000,CAST (NULL AS INTEGER),CAST (NULL AS CHAR),CAST (NULL AS CHAR),CAST (NULL AS CHAR), 1,FALSE,2,TRUE,FALSE,FALSE,CAST (NULL AS INTEGER),CAST (NULL AS INTEGER),CAST (NULL AS INTEGER)),('BLOB',2004,2147483647,CAST (NULL AS CHAR),CAST (NULL AS CHAR),'length', 1,FALSE,0,CAST (NULL AS BOOLEAN),FALSE,CAST (NULL AS BOOLEAN), CAST (NULL AS INTEGER),CAST (NULL AS INTEGER),CAST (NULL AS INTEGER)),('CLOB',2005,2147483647,'''','''','length', 1,TRUE,1,CAST (NULL AS BOOLEAN),FALSE,CAST (NULL AS BOOLEAN), CAST (NULL AS INTEGER),CAST (NULL AS INTEGER),CAST (NULL AS INTEGER)), ('XML',2009,CAST (NULL AS INTEGER),CAST (NULL AS CHAR),CAST (NULL AS CHAR),CAST (NULL AS CHAR), 1,TRUE,0,FALSE,FALSE,FALSE, CAST (NULL AS INTEGER),CAST (NULL AS INTEGER),CAST (NULL AS INTEGER)) ) AS TYPEINFO(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T14,T15,T18) WHERE (T1 <> 'BOOLEAN' OR CAST(? AS SMALLINT) <> 0)
+java.lang.OutOfMemoryError: PermGen space
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:800)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:643)
+	at org.apache.derby.impl.services.reflect.ReflectLoaderJava2.loadGeneratedClass(Unknown Source)
+	at org.apache.derby.impl.services.reflect.ReflectClassesJava2.loadGeneratedClassFromData(Unknown Source)
+	at org.apache.derby.impl.services.reflect.DatabaseClasses.loadGeneratedClass(Unknown Source)
+	at org.apache.derby.impl.services.bytecode.GClass.getGeneratedClass(Unknown Source)
+	at org.apache.derby.impl.sql.compile.ExpressionClassBuilder.getGeneratedClass(Unknown Source)
+	at org.apache.derby.impl.sql.compile.StatementNode.generate(Unknown Source)
+	at org.apache.derby.impl.sql.GenericStatement.prepMinion(Unknown Source)
+	at org.apache.derby.impl.sql.GenericStatement.prepare(Unknown Source)
+	at org.apache.derby.impl.sql.conn.GenericLanguageConnectionContext.prepareInternalStatement(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedPreparedStatement.<init>(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.newEmbedPreparedStatement(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.prepareMetaDataStatement(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedDatabaseMetaData.getPreparedQuery(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedDatabaseMetaData.getPreparedQuery(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedDatabaseMetaData.getTypeInfoMinion(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedDatabaseMetaData.getTypeInfo(Unknown Source)
+	at org.datanucleus.store.rdbms.schema.RDBMSSchemaHandler.getRDBMSTypesInfo(RDBMSSchemaHandler.java:358)
+	at org.datanucleus.store.rdbms.schema.RDBMSSchemaHandler.getSchemaData(RDBMSSchemaHandler.java:166)
+	at org.datanucleus.store.rdbms.adapter.BaseDatastoreAdapter.initialiseTypes(BaseDatastoreAdapter.java:451)
+	at org.datanucleus.store.rdbms.RDBMSStoreManager.<init>(RDBMSStoreManager.java:312)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at org.datanucleus.plugin.NonManagedPluginRegistry.createExecutableExtension(NonManagedPluginRegistry.java:631)
+	at org.datanucleus.plugin.PluginManager.createExecutableExtension(PluginManager.java:301)
+	at org.datanucleus.NucleusContext.createStoreManagerForProperties(NucleusContext.java:1187)
+	at org.datanucleus.NucleusContext.initialise(NucleusContext.java:356)
+	at org.datanucleus.api.jdo.JDOPersistenceManagerFactory.freezeConfiguration(JDOPersistenceManagerFactory.java:775)
+Cleanup action completed
