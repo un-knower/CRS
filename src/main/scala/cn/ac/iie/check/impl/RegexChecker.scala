@@ -1,6 +1,7 @@
 package cn.ac.iie.check.impl
 
 import cn.ac.iie.check.Checker
+import org.apache.spark.Accumulator
 import org.apache.spark.util.LongAccumulator
 
 import scala.collection.mutable
@@ -10,7 +11,7 @@ class RegexChecker extends Checker{
 
   var regex_memory = new mutable.HashMap[String,Regex]()
 
-  override def check(data_source: Array[String], index: List[Int], checker_param: Map[String, Any],accumulator: LongAccumulator): Boolean = {
+  override def check(data_source: Array[String], index: List[Int], checker_param: Map[String, Any],accumulator:Accumulator[Long]): Boolean = {
     for (i<-index){
       val regex = checker_param("regex").asInstanceOf[String]
       var reg:Regex = regex_memory.getOrElse(regex,null)

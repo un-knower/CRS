@@ -2,12 +2,11 @@ package cn.ac.iie.dataImpl.dns
 
 
 import cn.ac.iie.Service.Config
-import cn.ac.iie.base.dns.{CheckLog, DnsLog, DnsParseLog, DnsParseRatio}
-import cn.ac.iie.dns.dataImpl.ReturnCodeAccumulator
+import cn.ac.iie.base.dns.{CheckLog, DnsParseLog}
 import cn.ac.iie.utils.dns.{DateUtil, JdbcUtil, LogUtil}
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkContext
-import org.apache.spark.sql.{SaveMode, SparkSession}
+import org.apache.spark.sql.SQLContext
 
 object DnsOffline {
 
@@ -20,34 +19,34 @@ object DnsOffline {
       Logger.getLogger("org.eclipse.jetty.server").setLevel(Level.OFF)
       //Config.config_spark_param.registerKryoClasses(Array(classOf[IpControl],classOf[DnsLog],classOf[DnsParseLog],classOf[Checker]))
       val sparkContext: SparkContext = new SparkContext(Config.config_spark_param)
+      val sqlContext = new SQLContext(sparkContext)
       val ipControlBroadcast = sparkContext.broadcast(JdbcUtil.getIpControl)
       val logTypeBroadcast = sparkContext.broadcast(Config.config_log_type)
       val config_profile_param = Config.config_profile_param
       val hdfs_url = config_profile_param("hdfs.url")
       val hdfs_dnslog_path = config_profile_param("hdfs.dnslog.path")
       val hive_table_name = config_profile_param("hive.table.name")
-      val totalCount = sparkContext.longAccumulator("totalCount")
-      val dataLimitCount = sparkContext.longAccumulator("dataLimitCount")
-      val lengthCheckerCount = sparkContext.longAccumulator("lengthCheckerCount")
-      val notNullCheckerCount = sparkContext.longAccumulator("notNullCheckerCount")
-      val regexCheckerCount = sparkContext.longAccumulator("regexCheckerCount")
-      val returnCodeAccumulator = new ReturnCodeAccumulator
-      sparkContext.register(returnCodeAccumulator)
-      val spark = SparkSession.builder().config(sparkContext.getConf).enableHiveSupport().getOrCreate()
-      import spark.implicits._
-      implicit val encoder = org.apache.spark.sql.Encoders.kryo[DnsLog]
+      val totalCount = sparkContext.accumulator[Long](0)
+      val dataLimitCount = sparkContext.accumulator[Long](0)
+      val lengthCheckerCount = sparkContext.accumulator[Long](0)
+      val notNullCheckerCount = sparkContext.accumulator[Long](0)
+      val regexCheckerCount = sparkContext.accumulator[Long](0)
+      /*val returnCodeAccumulator = new ReturnCodeAccumulator
+      sparkContext.register(returnCodeAccumulator)*/
       val input = hdfs_url+hdfs_dnslog_path+etlDate
       //val input = "hdfs://10.0.30.101:8020/temp/ljy_test/log"//791_12_20171025230217a
       //val input = "file:///C:\\Users\\Administrator\\Desktop\\791_12_20171025230217a"
-      val dataSet = spark.read.textFile(input)
+      val dataSet = sparkContext.textFile(input)
       val res = dataSet.filter(line=>ProcessDnsLog.check(totalCount,dataLimitCount,lengthCheckerCount,notNullCheckerCount,regexCheckerCount,line,logTypeBroadcast)).map(line=>{
         val dns_log = ProcessDnsLog.parseLine(line,logTypeBroadcast)
         val dnsParseLog = ProcessDnsLog.transform(dns_log,ipControlBroadcast,province_code)
-        returnCodeAccumulator.add(dnsParseLog.return_code)
+        //returnCodeAccumulator.add(dnsParseLog.return_code)
         dnsParseLog
       })
-      res.createOrReplaceTempView("dns_log")
-      val res2 = spark.sql("""
+      import sqlContext.implicits._
+      val df = sqlContext.createDataFrame(res,DnsParseLog.getClass)
+      df.registerTempTable("dns_log")
+      val res2 = sqlContext.sql("""
         select
           biz_time as pp_0101,
           domain as dd_0001,
@@ -73,14 +72,14 @@ object DnsOffline {
           sys_code,
           user_type,
           province_code""")
-      import spark.sql
-      res2.createOrReplaceTempView("dns_result")
-      sql("INSERT OVERWRITE TABLE "+hive_table_name+" PARTITION (ds='"+etlDate+"',prov='"+province_code+"') select * from dns_result")
+      res2.write.parquet("/dns/result")
+     /* res2.createOrReplaceTempView("dns_result")
+      sql("INSERT OVERWRITE TABLE "+hive_table_name+" PARTITION (ds='"+etlDate+"',prov='"+province_code+"') select * from dns_result")*/
       val message = s"总计处理${totalCount.value}条数据,数据分割长度错误${dataLimitCount.value}条,非空校验器验证错误${notNullCheckerCount.value}条,正则校验器验证错误${regexCheckerCount.value}条,长度校验器验证错误${lengthCheckerCount.value}条"
       LogUtil.log(message)
       checkLog.message = message
       checkLog.correct_ratio = 1-((BigDecimal(dataLimitCount.value)+BigDecimal(notNullCheckerCount.value)+BigDecimal(regexCheckerCount.value))/BigDecimal(totalCount.value)).toDouble
-      LogUtil.log(s"parse_code_ratio ${returnCodeAccumulator.value}")
+      /*LogUtil.log(s"parse_code_ratio ${returnCodeAccumulator.value}")*/
       /*if(!returnCodeAccumulator.isZero)
         JdbcUtil.insert_parse_code_ratio(returnCodeAccumulator.value)*/
       checkLog.state = "sechdule_succeeded"

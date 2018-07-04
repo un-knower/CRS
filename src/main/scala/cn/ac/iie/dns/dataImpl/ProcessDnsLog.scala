@@ -4,8 +4,8 @@ import cn.ac.iie.base.common.{IpControl, LogConfig}
 import cn.ac.iie.base.dns.{CheckLog, DnsLog, DnsParseLog}
 import cn.ac.iie.check.impl.{LengthChecker, NotNullChecker, RegexChecker}
 import cn.ac.iie.utils.dns.{DomainUtil, JdbcUtil}
+import org.apache.spark.Accumulator
 import org.apache.spark.broadcast.Broadcast
-import org.apache.spark.util.LongAccumulator
 
 import scala.util.Random
 
@@ -90,7 +90,7 @@ object ProcessDnsLog extends Serializable {
   }
 
 
-  def check(totalCount: LongAccumulator, dataLimitCount: LongAccumulator, lengthCheckerCount: LongAccumulator, notNullCheckerCount: LongAccumulator, regexCheckerCount: LongAccumulator,line: String,log_type:Broadcast[LogConfig]): Boolean = {
+  def check(totalCount: Accumulator[Long], dataLimitCount: Accumulator[Long], lengthCheckerCount: Accumulator[Long], notNullCheckerCount: Accumulator[Long], regexCheckerCount: Accumulator[Long],line: String,log_type:Broadcast[LogConfig]): Boolean = {
     totalCount.add(1)
     val logConfig = log_type.value
     val data_separator = logConfig.data_separator

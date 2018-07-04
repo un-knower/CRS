@@ -3,13 +3,13 @@ package cn.ac.iie.check.impl
 import java.lang.reflect.Method
 
 import cn.ac.iie.check.Checker
-import org.apache.spark.util.LongAccumulator
+import org.apache.spark.Accumulator
 
 class FunctionChecker extends Checker{
 
   var method:Method = null
 
-  override def check(data_source: Array[String], index: List[Int], check_param: Map[String, Any], accumulator: LongAccumulator): Boolean = {
+  override def check(data_source: Array[String], index: List[Int], check_param: Map[String, Any], accumulator:Accumulator[Long]): Boolean = {
     val function = check_param("function").asInstanceOf[String]
     val sp = function.split("#")
     val clazz = Class.forName(sp(0))

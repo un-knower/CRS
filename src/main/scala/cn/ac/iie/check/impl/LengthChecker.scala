@@ -1,12 +1,11 @@
 package cn.ac.iie.check.impl
 
 import cn.ac.iie.check.Checker
-import cn.ac.iie.utils.dns.LogUtil
-import org.apache.spark.util.LongAccumulator
+import org.apache.spark.Accumulator
 
 class LengthChecker extends Checker{
 
-  override def check(data_source: Array[String], index: List[Int], check_param: Map[String, Any],accumulator: LongAccumulator): Boolean = {
+  override def check(data_source: Array[String], index: List[Int], check_param: Map[String, Any],accumulator: Accumulator[Long]): Boolean = {
     for (i<-index){
       val str = data_source(i)
       val length = check_param("length_limit").asInstanceOf[String].toInt
